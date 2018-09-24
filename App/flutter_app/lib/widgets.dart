@@ -46,16 +46,16 @@ class ControlScreenState extends State<ControlScreen> {
     if (_isConnected) {
       //Todo: Replace with control interface.
 
-      return Column(children: <Widget>[
-        Text("Connected to Device"),
-        ListBody(
+      return
+        ListView(
+          shrinkWrap: true,
           reverse: true,
           children: _measurementList
               .map((measurement) => LogListTile(measurement[0], measurement[1],
                   measurement[2], measurement[3], measurement[4]))
               .toList(),
         )
-      ]);
+      ;
     } else {
       //Todo: Style home screen
       return Center(
