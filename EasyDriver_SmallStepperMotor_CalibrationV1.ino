@@ -1,9 +1,5 @@
 //////////////////////////////////////////////////////////////////
-//Modified by Ho Yun Bobby Chan @ SparkFun Electronics Inc.
-//January 26, 2016
-//©2011 bildr
-//http://bildr.org/2011/06/easydriver/
-//Released under the MIT License - Please reuse change and share
+//Modified by Michael Knapp
 //
 //Description: Using the example code from Bildr to test the
 //speed of the small stepper motor [https://www.sparkfun.com/products/10551].
