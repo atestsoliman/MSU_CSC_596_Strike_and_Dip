@@ -1,42 +1,40 @@
 //////////////////////////////////////////////////////////////////
+//Modified by Ho Yun Bobby Chan @ SparkFun Electronics Inc.
+//January 26, 2016
 //©2011 bildr
 //http://bildr.org/2011/06/easydriver/
 //Released under the MIT License - Please reuse change and share
+//
+//Description: Using the example code from Bildr to test the
+//speed of the small stepper motor [https://www.sparkfun.com/products/10551].
+//Timing it with a watch, speed looked to be about 997-999 revolutions
+//per minute (RPM) using a 12V benchtop power supply.
 //Using the easy stepper with your arduino
 //use rotate and/or rotateDeg to controll stepper motor
 //speed is any number from .01 -> 1 with 1 being fastest - 
 //Slower Speed == Stronger movement
+
 /////////////////////////////////////////////////////////////////
 
-
-#define DIR_PIN 2
-#define STEP_PIN 3
+#define DIR_PIN A1
+#define STEP_PIN A0
+int counter = 0; //counter to determine the amount of revolutions
 
 void setup() { 
   pinMode(DIR_PIN, OUTPUT); 
   pinMode(STEP_PIN, OUTPUT); 
+  Serial.begin(9600);
 } 
 
 void loop(){ 
 
-  //rotate a specific number of degrees 
-  rotateDeg(360, 1); 
-  delay(1000);
-
-  rotateDeg(-360, .1);  //reverse
-  delay(1000); 
-
-
   //rotate a specific number of microsteps (8 microsteps per step)
-  //a 200 step stepper would take 1600 micro steps for one full revolution
-  rotate(1600, .5); 
-  delay(1000); 
-
-  rotate(-1600, .25); //reverse
-  delay(1000); 
+  //a 48 step stepper would take 384 micro steps for one full revolution
+  rotate(384, 1);//calculated from step angle of 7.5 degrees (360/7.5 = 48) at full speed
+  counter++; 
+  Serial.print("Counter = "); //display revolutions on the serial monitor
+  Serial.println(counter); 
 }
-
-
 
 void rotate(int steps, float speed){ 
   //rotate a specific number of microsteps (8 microsteps per step) - (negitive for reverse movement)
@@ -45,16 +43,22 @@ void rotate(int steps, float speed){
   steps = abs(steps);
 
   digitalWrite(DIR_PIN,dir); 
-
-  float usDelay = (1/speed) * 70;
-
-  for(int i=0; i < steps; i++){ 
-    digitalWrite(STEP_PIN, HIGH); 
-    delayMicroseconds(usDelay); 
-
-    digitalWrite(STEP_PIN, LOW); 
-    delayMicroseconds(usDelay); 
-  } 
+float usDelay = (1/speed) * 70
+for(int i=0; i < steps; i++){
+    if(steps < 180 and steps > 0){
+      digitalWrite(STEP_PIN, HIGH); 
+      delayMicroseconds(usDelay); 
+      digitalWrite(STEP_PIN, LOW); 
+      delayMicroseconds(usDelay); 
+     
+    }else if(steps < -180){
+      digitalWrite(STEP_PIN,LOW);
+      delayMicroseconds(usDelay);
+      digitalWrite(STEP_PIN,HIGH);
+      delayMicroseconds(usDelay);
+    }else(counter > 521){
+      break;
+    }
 } 
 
 void rotateDeg(float deg, float speed){ 
