@@ -6,7 +6,7 @@
 
 import serial
 import csv
-import mahplotlib
+import mathplotlib
 i
 ser = serial.Serial('/dev/ttyACM0')
 ser_bytes = ser.readline()
@@ -30,7 +30,7 @@ while True:
         ax.autoscale_view()
         fig.canvas.draw()
         fig.canvas.flush_events()
-        #this should polot the Gyro Y vs the #of decoded Bytes
+        #this should polot the Gyro Y vs the # of decoded Bytes
         y2_var = np.append(gyroY, decoded_bytes)
         y2_var = gyroY[1:plot_window]
         line.set_ydata(y2_var)
