@@ -11,6 +11,9 @@ Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1();
 #define LSM9DS1_MOSI A4
 #define LSM9DS1_XGCS 6
 #define LSM9DS1_MCS 5
+
+//length of the base 10 rep sent over serial
+#define SIG_DIG 5
 // You can also use software SPI
 //Adafruit_LSM9DS1 lsm = Adafruit_LSM9DS1(LSM9DS1_SCK, LSM9DS1_MISO, LSM9DS1_MOSI, LSM9DS1_XGCS, LSM9DS1_MCS);
 // Or hardware SPI! In this case, only CS pins are passed in
@@ -46,15 +49,15 @@ void setup()
     delay(1); // will pause Zero, Leonardo, etc until serial console opens
   }
   
-  Serial.println("LSM9DS1 data read demo");
+  //Serial.println("LSM9DS1 data read demo");
   
   // Try to initialise and warn if we couldn't detect the chip
   if (!lsm.begin())
   {
-    Serial.println("Oops ... unable to initialize the LSM9DS1. Check your wiring!");
+    //Serial.println("Oops ... unable to initialize the LSM9DS1. Check your wiring!");
     while (1);
   }
-  Serial.println("Found LSM9DS1 9DOF");
+  //Serial.println("Found LSM9DS1 9DOF");
 
   // helper to just set the default scaling we want, see above!
   setupSensor();
@@ -69,18 +72,18 @@ void loop()
 
   lsm.getEvent(&a, &m, &g, &temp); 
 
-  Serial.print("Accel X: "); Serial.print(a.acceleration.x); Serial.print(" m/s^2");
-  Serial.print("\tY: "); Serial.print(a.acceleration.y);     Serial.print(" m/s^2 ");
-  Serial.print("\tZ: "); Serial.print(a.acceleration.z);     Serial.println(" m/s^2 ");
+  Serial.print(a.acceleration.x, SIG_DIG); Serial.print('\t');
+  Serial.print(a.acceleration.y, SIG_DIG); Serial.print('\t');
+  Serial.print(a.acceleration.z, SIG_DIG); Serial.print('\t');
 
-  Serial.print("Mag X: "); Serial.print(m.magnetic.x);   Serial.print(" gauss");
-  Serial.print("\tY: "); Serial.print(m.magnetic.y);     Serial.print(" gauss");
-  Serial.print("\tZ: "); Serial.print(m.magnetic.z);     Serial.println(" gauss");
+  Serial.print(g.gyro.x, SIG_DIG); Serial.print('\t');
+  Serial.print(g.gyro.y, SIG_DIG); Serial.print('\t');
+  Serial.print(g.gyro.z, SIG_DIG); Serial.print('\t');
 
-  Serial.print("Gyro X: "); Serial.print(g.gyro.x);   Serial.print(" dps");
-  Serial.print("\tY: "); Serial.print(g.gyro.y);      Serial.print(" dps");
-  Serial.print("\tZ: "); Serial.print(g.gyro.z);      Serial.println(" dps");
+  Serial.print(m.magnetic.x, SIG_DIG); Serial.print('\t');
+  Serial.print(m.magnetic.y, SIG_DIG); Serial.print('\t');
+  Serial.print(m.magnetic.z, SIG_DIG); Serial.print('\t');
 
   Serial.println();
-  delay(2000);
+  delay(200);
 }

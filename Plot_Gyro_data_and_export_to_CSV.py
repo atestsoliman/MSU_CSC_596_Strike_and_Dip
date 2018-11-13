@@ -36,7 +36,7 @@ while True:
         fig.canvas.draw()
         fig.canvas.flush_events()
         
-        #this should polot the Gyro Y vs the # of decoded Bytes
+        #this should poot the Gyro Y vs the # of decoded Bytes
         # each one of these only displays the Y data compared to the # of decoded bytes.. might be a better idea to compare this to  
         # set of data that is true north so it will be easier to verify true north 
         
